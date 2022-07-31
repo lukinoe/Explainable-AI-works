@@ -1,38 +1,3 @@
-The presentations will be held during the Q&A sessions on that day.
-For more details, please refer to the assignment description.
-
-## Final Submission due on 15.12.2021, 23:59
-The submission is done with this repository. Make to push your code until the deadline.
-
-The repository has to include the implementations of the picked approaches and the filled out report in this README.
-
-* Sending us an email with the code is not necessary.
-* Update the *environment.yml* file if you need additional libraries, otherwise the code is not executeable.
-* Save your final executed notebook(s) as html (File > Download as > HTML) and add them to your repository.
-
-## Development Environment
-
-Checkout this repo and change into the folder:
-```
-git clone https://github.com/jku-icg-classroom/xai_model_explanation_2021-<GROUP_NAME>.git
-cd xai_model_explanation_2021-<GROUP_NAME>
-```
-
-Load the conda environment from the shared `environment.yml` file:
-```
-conda env create -f environment.yml
-conda activate xai_model_explanation
-```
-
-> Hint: For more information on Anaconda and enviroments take a look at the README in our [tutorial repository](https://github.com/JKU-ICG/python-visualization-tutorial).
-
-Then launch Jupyter Lab:
-```
-jupyter lab
-```
-
-Alternatively, you can also work with [binder](https://mybinder.org/), [deepnote](https://deepnote.com/), [colab](https://colab.research.google.com/), or any other service as long as the notebook runs in the standard Jupyter environment.
-
 
 ## Report
 
@@ -45,8 +10,6 @@ Alternatively, you can also work with [binder](https://mybinder.org/), [deepnote
 Find explainability approaches for the selected models. Repeat the section below for each approach to describe it.
 
 #### Approach 1 : Showing how the attention changes when the model is trained
-
-* Breifly summarize the approach. 
 
 For our first approach, we use the library BertViz (https://github.com/jessevig/bertviz) to visualize the attention of the model for each layer and head. 
 We use the model view of the library BertViz, which shows you can see the attention for every head for every layer at once. The visualization is interactive and you can see by clicking or hovering in the visualization to which words the attention flows.
@@ -61,16 +24,7 @@ With that the following got visualized:
 
 <img src="img/model_diff_positive.png" alt="Attention difference betwen trained and untrained model visualized on a positive text" title="Attention difference between trained and untrained model on a positive text" />
 
-* Categorize this explainability approach according to the criteria by Hohman et al.
 
-**Why?**      Interpretability & Explainability</br>
-**What?**     Learned Model Parameters | Computational Graph & Network Architecture</br>
-**When?**     After Training</br>
-**Who?**      Model Developers & Builders</br>
-**How?**      Algorithms for Attribution & Feature Visualization</br>
-**Where?**    Interpretability of NLP Tasks</br>
-
-* Interpret the results here. How does it help to explain your model?
 
 If we interact with the visualization, we can see what attention values got bigger, the following is an example:
 
@@ -90,21 +44,9 @@ This can help explain how the model is working and what it has learned to classi
 
 #### Approach 2 : Visualize the embeddings
 
-* Breifly summarize the approach. 
 
 In the second approach we created prediction of the IMDB dataset to calculate the shap values which give explaination how much a word contributed to the sentiment of a review.
 Then we downproject the embedding of the words and color them according to their shap value.
-
-* Categorize this explainability approach according to the criteria by Hohman et al.
-
-**Why?**    Interpretability & Explainability </br>
-**What?**   Aggregated Information </br>
-**When?**   After Training </br>
-**Who?**    Model Users </br>
-**How?**    Dimensionality Reduction & Scatter Plots </br>
-**Where?**  NLP Sentiment Research </br>
-
-* Interpret the results here. How does it help to explain your model?
 
 The color of the words indicate wheter a word contributed more to positive or negative reviews. 
 So it can be interpreted that certain words are more often used in a positive or negative way.
@@ -118,23 +60,9 @@ The shading indicates how strong the sentiment of a word is.
 
 #### Approach 3 : Sentiment Analysis for every layer and epoch
 
-* Breifly summarize the approach. 
-
 We trained a pre-trained DistilBERT sentiment model for 5 epochs. After each epoch we generated embeddings for 200 samples and saved the hidden states of each layer for each sample in a numpy array of shape (epoch, sample, layer, hidden_dim). 
 For each of the embeddings of the 5 epochs and the 6 layers we performed downprojection via PCA und visualized them in scatter plots, where the colors represent the labels, positive (1) and negative(0).
 
-
-
-* Categorize this explainability approach according to the criteria by Hohman et al.
-
-**Why?** Interpretability & Explainability </br>
-**What?** Aggregated Information </br>
-**When?** During/After Training </br>
-**Who?** Model Users </br>
-**How?** Dimensionality Reduction & Scatter Plots </br>
-**Where?** NLP Sentiment Research </br>
-
-* Interpret the results here. How does it help to explain your model?
 
 Here the downprojected embeddings are visualized. The rows of the visualization represent the epochs, the columns represent the layers. 
 The plots illustrate well how the model learns sentiment analysis on the training samples by adapting the embeddings layer by layer, epoch by epoch.
@@ -145,20 +73,8 @@ The plots illustrate well how the model learns sentiment analysis on the trainin
 
 #### Approach 4 : Sentiment Analysis with SHAP
 
-* Breifly summarize the approach. 
-
 Based on the work of Lundberg & Lee (https://proceedings.neurips.cc//paper/2017/file/8a20a8621978632d76c43dfd28b67767-Paper.pdf), the idea is to use the Shapely value that originally comes from game theory to determine the marginal contributions of input factors to the result. In our specific use case, this means that each DistilBERT token gets a certain Shapely value assigned, based on it’s impact on the prediction (positive or negative impact on sentiment). For this the SHAP library is used.
 
-* Categorize this explainability approach according to the criteria by Hohman et al.
-
-**Why?** Increases interpretability & explainability of the model/the input-output mapping, as well as for improving or comparing models </br>
-**What?** Learned model parameters, aggregated information </br>
-**When?** After training </br>
-**Who?** Model Developers & Builders | Model Users </br>
-**How?** Various plots like barcharts, but also interactive input/output mapping for feature importance </br>
-**Where?** NLP, Image classification/object detection, Tabular data </br>
-
-* Interpret the results here. How does it help to explain your model?
 
 The results show which DistilBERT tokens have overall the biggest impact on positive or negative sentiment. This leads to a better understanding of how DistilBERT determines the overall sentiment of a sequence, focusing on Shapely-based feature importance. Not only can the importance be analyzed on a global level (e.g. obtaining the on average most influential tokens overall), but also on a sentence level. This means that we can determine which features are in general important for DistilBERT to decide if a sentiment is positive or negative, but also look at a specific sequence and get explanations for the related prediction.
 
@@ -177,7 +93,6 @@ Furthermore, we can see that the phrase got an overall Shapely value of ~1.54. T
 
 
 ### Summary of Approaches
-Write a brief summary reflecting on all approaches.
 
 Our goal was to get both a general understanding about the model, as well as task-specific insights which are in this case about Sentiment Analysis. Approaches 1 & 2 (Attention changes & Embedding visualisation) aim to target the former while approaches 3 & 4 (Sentiment per layer/epoch & SHAP) explain the latter. 
 
