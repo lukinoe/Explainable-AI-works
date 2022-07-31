@@ -1,14 +1,3 @@
-
-# Explainable AI Assignment 2 - Model Explanations
-In this assignment, you are challenged to explain a model. For this, you will research exisiting approaches and apply them to your model and interpret the results.
-
-## General Information Submission due on 02.12.2021, 23:59
-
-For the intermediate submission, please enter the group and dataset information. Coding is not yet necessary.
-
-**Team Name:** CodeBusters
-
-## Intermediate Presentation on the 09.12.2021 (optional)
 The presentations will be held during the Q&A sessions on that day.
 For more details, please refer to the assignment description.
 
